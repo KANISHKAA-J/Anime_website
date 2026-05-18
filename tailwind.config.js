@@ -7,14 +7,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0f1115',
-        surface: '#1c1f26',
-        primary: '#6d28d9', // Deep purple
-        primaryHover: '#5b21b6',
-        accent: '#f43f5e', // Rose red
+        background: '#040508',
+        surface: '#0d0f17',
+        primary: '#00f2fe',
+        primaryHover: '#00c6ff',
+        accent: '#ff007f',
+        accentHover: '#e00070',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Outfit', 'sans-serif'],
+        display: ['Space Grotesk', 'sans-serif'],
+      },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        glowPulse: {
+          '0%, 100%': { opacity: '0.4', filter: 'drop-shadow(0 0 5px rgba(0, 242, 254, 0.3))' },
+          '50%': { opacity: '0.8', filter: 'drop-shadow(0 0 15px rgba(0, 242, 254, 0.6))' },
+        }
       }
     },
   },

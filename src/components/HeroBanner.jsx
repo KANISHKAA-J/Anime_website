@@ -36,76 +36,101 @@ const HeroBanner = () => {
   const anime = trending[currentIndex];
 
   return (
-    <div className="relative w-full h-[60vh] md:h-[85vh] overflow-hidden">
+    <div className="relative w-full h-[65vh] md:h-[88vh] overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute -left-1/4 top-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse-slow"></div>
+      <div className="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[150px] pointer-events-none -z-10 animate-float"></div>
+
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0, scale: 1.05 }}
+          initial={{ opacity: 0, scale: 1.03 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0"
         >
           {/* Background Image - prefer trailer image if available, else large poster */}
           <img
             src={anime.trailer?.images?.maximum_image_url || anime.images.webp.large_image_url}
             alt={anime.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#040508] via-[#040508]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#040508] via-transparent to-transparent" />
         </motion.div>
       </AnimatePresence>
 
       <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-        <div className="w-full md:w-2/3 lg:w-1/2 z-10 space-y-6">
-          <motion.div
-            key={`content-${currentIndex}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-primary font-bold tracking-wider text-sm">#TOP {currentIndex + 1}</span>
-              <span className="px-2 py-0.5 border border-white/20 rounded text-xs text-gray-300">
+        <div className="w-full md:w-2/3 lg:w-3/5 z-10 space-y-6">
+          <div key={`content-${currentIndex}`}>
+            {/* Tags Staggered */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex items-center gap-3 mb-4"
+            >
+              <span className="text-primary font-extrabold tracking-wider text-xs uppercase px-2.5 py-1 bg-primary/10 border border-primary/20 rounded-md font-display filter drop-shadow-[0_0_5px_rgba(0,242,254,0.3)]">
+                #TOP {currentIndex + 1}
+              </span>
+              <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-semibold text-gray-300">
                 {anime.type}
               </span>
-              <span className="px-2 py-0.5 border border-white/20 rounded text-xs text-gray-300">
+              <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-semibold text-gray-300">
                 {anime.rating ? anime.rating.split(' ')[0] : 'NR'}
               </span>
-            </div>
+            </motion.div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 line-clamp-2 leading-tight">
+            {/* Title Staggered */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-4 line-clamp-2 leading-[1.1] font-display"
+            >
               {anime.title_english || anime.title}
-            </h1>
+            </motion.h1>
             
-            <p className="text-gray-300 text-sm md:text-base line-clamp-3 md:line-clamp-4 mb-8 max-w-xl">
+            {/* Synopsis Staggered */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-gray-300 text-sm md:text-base line-clamp-3 md:line-clamp-4 mb-8 max-w-xl leading-relaxed"
+            >
               {anime.synopsis}
-            </p>
+            </motion.p>
             
-            <div className="flex flex-wrap items-center gap-4">
+            {/* Actions Staggered */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-wrap items-center gap-4"
+            >
               <Link 
                 to={`/anime/${anime.mal_id}`}
-                className="flex items-center gap-2 bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-full font-semibold transition-all hover:scale-105 shadow-lg shadow-primary/30"
+                className="flex items-center gap-2.5 bg-gradient-to-r from-primary to-primaryHover text-black px-8 py-3.5 rounded-full font-bold uppercase tracking-wider text-xs shadow-lg shadow-primary/20 hover:shadow-primary/45 border border-primary/20 transition-all duration-300 hover:scale-105"
               >
-                <Play size={20} className="fill-white" />
+                <Play size={16} className="fill-black text-black animate-pulse" />
                 View Details
               </Link>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-20">
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-3 z-20">
         {trending.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              idx === currentIndex ? 'w-8 bg-primary' : 'w-4 bg-white/30 hover:bg-white/50'
+            className={`h-2 rounded-full transition-all duration-500 ${
+              idx === currentIndex ? 'w-10 bg-primary shadow-[0_0_10px_rgba(0,242,254,0.8)]' : 'w-2 bg-white/20 hover:bg-white/40'
             }`}
           />
         ))}
